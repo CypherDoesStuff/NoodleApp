@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ProductiveApp_Ava.ViewModels"
+		xmlns:views="using:ProductiveApp_Ava.Views"
+		xmlns:local="using:ProductiveApp_Ava.Models"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ProductiveApp_Ava.Views.MainWindow"
+        Icon="/Assets/noodles.ico"
+        Title="NoodleApp">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="60"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<WrapPanel
+			Grid.Row="0"
+			Grid.ColumnSpan="2"
+			Background="Gray">
+			
+		</WrapPanel>
+		
+		<DockPanel
+			Grid.Column="0"
+			Grid.Row="1"
+			Width="60"
+			Background="Gray">
+
+			<StackPanel>
+				<Button
+					Margin="2,5,2,2"
+					Width="50" Height="25"
+					HorizontalAlignment="Center"
+					HorizontalContentAlignment="Center"
+					FontSize="10"
+				Command="{Binding EditNote}">Note</Button>
+				<Button
+					Margin="2,5,2,2"
+					Width="50" Height="25"
+					HorizontalAlignment="Center"
+					HorizontalContentAlignment="Center"
+					FontSize="10">Image</Button>
+			</StackPanel>
+		</DockPanel>
+		
+		<views:CanvasView Grid.Column="1" Grid.Row="1" />
+
+		<TextBlock Text="{Binding Greeting}" 
+				   Grid.Column="1"
+				   Grid.Row="1"
+				   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	</Grid>
+</Window>
