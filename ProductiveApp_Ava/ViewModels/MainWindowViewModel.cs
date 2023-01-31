@@ -16,15 +16,23 @@ namespace ProductiveApp_Ava.ViewModels
         public static ObservableCollection<NoteViewModel> notes { get; private set; }
         public CanvasViewModel canvas;
 
+        Database db;
+
         public MainWindowViewModel()
         {
             notes = new ObservableCollection<NoteViewModel>();
 
             canvas = new CanvasViewModel();
-            Database db = new Database();
+            db = new Database();
 
             foreach (Note note in db.GetNotes())
                 AddNoteToCollection(note);
+        }
+
+        public void OnWindowClose()
+        {
+            Debug.WriteLine("Closed");
+            db.SaveAll();
         }
 
         public static void AddNoteToCollection(Note note)
@@ -44,8 +52,8 @@ namespace ProductiveApp_Ava.ViewModels
 
         public void EditNote()
         {
-            Debug.WriteLine("Editing");
-            notes[1].x = 0;
+            foreach (Note note in db.GetNotes())
+                Debug.WriteLine(note.ToString());
         }
     }
 }

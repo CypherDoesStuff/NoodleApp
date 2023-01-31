@@ -4,5 +4,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" Width="300" Height="200"
              x:Class="ProductiveApp_Ava.Views.Image_NoteView">
-	<Image Source="avares://ProductiveApp_Ava/Assets/noodles.ico"/>
+	<Image Source="{Binding source}"/>
 </UserControl>
