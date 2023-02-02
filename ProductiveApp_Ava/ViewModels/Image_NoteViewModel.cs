@@ -1,48 +1,45 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using ProductiveApp_Ava.Models;
+using ProductiveApp_Ava.Services;
 using ReactiveUI;
-using System;
 using System.IO;
-using System.Net;
 
 namespace ProductiveApp_Ava.ViewModels
 {
     public class Image_NoteViewModel : NoteViewModel
     {
+        MemoryStream _stream;
         Bitmap _source;
+
         Bitmap source { 
             get { return _source; }
             set { _source = value; this.RaisePropertyChanged(nameof(source)); }
         }
 
+        MemoryStream stream {
+            get { return _stream; }
+            set { _stream = value; this.RaisePropertyChanged(nameof(stream)); }
+        }
+
         public Image_NoteViewModel(Note note) : base(note)
         {
             Image_Note imageNote = (Image_Note)note;
-            DownloadImage(imageNote.url);
+            GetImage(imageNote.url);
         }
 
-        public async void DownloadImage(string url)
+        public async void GetImage(string url)
         {
-            using (WebClient client = new WebClient())
+            if (!ImageUtils.IsUrlGif(url))
             {
-                byte[] data = await client.DownloadDataTaskAsync(url);
-                source = DownloadComplete(data);
-            }
-        }
+                Bitmap image = await ImageUtils.GetImage(url);
 
-        private Bitmap DownloadComplete(byte[] data)
-        {
-            try
-            {
-                Stream stream = new MemoryStream(data);
-
-                var image = new Bitmap(stream);
-                return image;
+                if (image is not null)
+                    source = image;
             }
-            catch (Exception ex)
+            else
             {
-                System.Diagnostics.Debug.WriteLine(ex);
-                return null;
+                stream = await ImageUtils.SetGifFromUrl(url);
             }
         }
     }

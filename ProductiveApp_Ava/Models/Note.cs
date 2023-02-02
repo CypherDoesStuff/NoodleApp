@@ -53,5 +53,13 @@ namespace ProductiveApp_Ava.Models
     {
         [XmlText]
         public string url = string.Empty;
+        public ImageType type = ImageType.img;
+    }
+
+    public enum ImageType
+    {
+        img,
+        gif,
+        data
     }
 }

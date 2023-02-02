@@ -21,6 +21,8 @@ namespace ProductiveApp_Ava.Services
         private List<Board> boards;
         public Dictionary<string, Board> boardDict;
 
+        int selectedBoard;
+
         public Database()
         {
             Directory.CreateDirectory(Directory.GetCurrentDirectory() + filePath);
@@ -51,6 +53,16 @@ namespace ProductiveApp_Ava.Services
             }
         }
 
-        public IEnumerable<Note> GetNotes() => boards[0].notes;
+        public void SelectBoard(int boardIndex)
+        {
+            selectedBoard = boardIndex; 
+        }
+
+        public void AddNote(Note note) 
+        {
+            boards[selectedBoard].notes.Add(note);
+        }
+
+        public IEnumerable<Note> GetNotes() => boards[selectedBoard].notes;
     }
 }

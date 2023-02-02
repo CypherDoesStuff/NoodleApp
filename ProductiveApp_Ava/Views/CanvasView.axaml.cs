@@ -55,14 +55,16 @@ namespace ProductiveApp_Ava.Views
         public void Canvas_Drop(object? sender, DragEventArgs e)
         {
             isDragging = false;
-            /*
-            Note note = DragEventConverter.DragEventToNote(e);
-            Point dropPoint = e.GetPosition(this);
 
-            note.x = dropPoint.X;
-            note.y = dropPoint.Y;
-            MainWindowViewModel.AddNoteToCollection(note);
-            */
+            Note note = DragEventConverter.DragEventToNote(e);
+            if (note != null)
+            {
+                Point dropPoint = e.GetPosition(this);
+
+                note.x = dropPoint.X;
+                note.y = dropPoint.Y;
+                MainWindowViewModel.AddNoteToDatabase(note);
+            }
         }
 
         private static Point SnapPointToGrid(Point pointToSnap)

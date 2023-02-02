@@ -16,7 +16,7 @@ namespace ProductiveApp_Ava.ViewModels
         public static ObservableCollection<NoteViewModel> notes { get; private set; }
         public CanvasViewModel canvas;
 
-        Database db;
+        static Database db;
 
         public MainWindowViewModel()
         {
@@ -48,6 +48,12 @@ namespace ProductiveApp_Ava.ViewModels
                 case null:
                     break;
             }
+        }
+
+        public static void AddNoteToDatabase(Note note)
+        {
+            db.AddNote(note);
+            AddNoteToCollection(note);
         }
 
         public void EditNote()
