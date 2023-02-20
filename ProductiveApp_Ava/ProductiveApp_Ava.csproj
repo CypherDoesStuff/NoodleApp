@@ -10,6 +10,14 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\board.png" />
+    <None Remove="Assets\delete.png" />
+    <None Remove="Assets\doc.png" />
+    <None Remove="Assets\grid_light.png" />
+    <None Remove="Assets\image.png" />
+    <None Remove="Assets\list.png" />
+    <None Remove="Assets\LoadingImage.png" />
+    <None Remove="Assets\sticky_note.png" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
@@ -30,5 +38,10 @@
     <Reference Include="AvaloniaGif">
       <HintPath>..\..\Avalonia.GIF\AvaloniaGif\bin\Debug\netstandard2.1\AvaloniaGif.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\NoteToolView.axaml.cs">
+      <DependentUpon>NoteToolView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

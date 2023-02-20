@@ -13,6 +13,17 @@ namespace ProductiveApp_Ava.Views
 {
     public class NoteViewBase : UserControl
     {
+        protected override void OnInitialized()
+        {
+            NoteViewModel viewModel = (NoteViewModel)DataContext;
+            if(viewModel is not null)
+            {
+
+            }
+
+            base.OnInitialized();
+        }
+
         protected override void OnPointerMoved(PointerEventArgs e)
         {
             if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
@@ -20,25 +31,31 @@ namespace ProductiveApp_Ava.Views
                 var viewModel = (NoteViewModel)DataContext;
 
                 if (viewModel is not null)
-                    DragDrop(e, viewModel);
+                {
+                    NoteDragDrop(e, viewModel);
+
+                    e.Handled = true;
+                }
             }
 
             base.OnPointerMoved(e);
         }
 
-        private async void DragDrop(PointerEventArgs e, NoteViewModel viewModel)
+        internal async void NoteDragDrop(PointerEventArgs e, NoteViewModel viewModel)
         {
             if (!CanvasView.isDragging)
             {
-                Debug.WriteLine("Starting drag drop");
+                viewModel.Remove();
+
                 DataObject data = new DataObject();
                 data.Set("PersistentObject", viewModel);
 
                 CanvasView.isDragging = true;
                 CanvasView.cursorOffset = e.GetPosition(Parent);
-                CanvasView.currentDrag = this;
 
-                DragDropEffects dropResult = await Avalonia.Input.DragDrop.DoDragDrop(e, data, DragDropEffects.Move);
+                MainWindowViewModel.SetDragModel(viewModel);
+
+                DragDropEffects dropResult = await DragDrop.DoDragDrop(e, data, DragDropEffects.Move);
                 if (dropResult == DragDropEffects.None)
                 {
                     CanvasView.isDragging = false;

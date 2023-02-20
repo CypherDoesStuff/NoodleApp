@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" Width="300" MinHeight="100"
+             x:Class="ProductiveApp_Ava.Views.Text_NoteView">
+	<Panel
+		Background="Transparent">
+		<TextBox
+		Background="White"
+		BorderBrush="Transparent"
+		Text="{Binding text}"
+		TextWrapping="Wrap"
+		x:Name="textBox"
+		AcceptsReturn="True"
+		ScrollViewer.VerticalScrollBarVisibility="Disabled"
+		ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+			<TextBox.Styles>
+				<Style Selector="TextBox:pointerover /template/ Border">
+					<Setter Property="Background" Value="White"/>
+					<Setter Property="BorderBrush" Value="Transparent"/>
+				</Style>
+			</TextBox.Styles>
+		</TextBox>
+	</Panel>
+</UserControl>

@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ProductiveApp_Ava.Views.OverlayCanvasView">
+	<ItemsControl
+            IsHitTestVisible="False"
+            Items="{Binding dragCollection}">
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<Canvas Background="Transparent"/>
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+		<ItemsControl.Styles>
+			<Style Selector="ContentPresenter">
+				<Setter Property="Canvas.Left" Value="{Binding x}"/>
+				<Setter Property="Canvas.Top" Value="{Binding y}"/>
+			</Style>
+		</ItemsControl.Styles>
+	</ItemsControl>
+</UserControl>

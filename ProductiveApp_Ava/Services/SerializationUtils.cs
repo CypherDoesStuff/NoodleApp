@@ -8,7 +8,7 @@ namespace ProductiveApp_Ava.Services
 {
     public static class SerializationUtils
     {
-        public static void SerializeToFile(Board board, string fileName)
+        public static void SerializeBoardToFile(Board board, string fileName)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace ProductiveApp_Ava.Services
             }
         }
 
-        public static Board? DeserializeFromFile(string fileName)
+        public static Board? DeserializeBoardFromFile(string fileName)
         {
             try
             {

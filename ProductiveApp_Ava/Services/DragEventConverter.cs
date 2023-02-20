@@ -10,21 +10,25 @@ namespace ProductiveApp_Ava.Services
 {
     public static class DragEventConverter
     {
-        public static Note DragEventToNote(DragEventArgs e)
+        public static Note DragEventToNote(DragEventArgs e, out bool isPersistent)
         {
+            isPersistent = false;
+
+#if DEBUG
             foreach (string format in e.Data.GetDataFormats())
             {
                 Debug.WriteLine(format);
             }
-
+#endif
             if (e.Data.Contains("PersistentObject"))            
             {
                 Debug.WriteLine("Serializable");
 
                 object data = e.Data.Get("PersistentObject");
-                if (data is Note note)
+                if (data is NoteViewModel model)
                 {
-                    return note;
+                    isPersistent = true;
+                    return model._note;
                 }
             }
             else if (e.Data.Contains("FileNames"))

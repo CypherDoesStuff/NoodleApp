@@ -1,13 +1,13 @@
 using Avalonia.Controls;
 using Avalonia.Input;
-using ProductiveApp_Ava.ViewModels;
+using System;
 using System.Diagnostics;
 
 namespace ProductiveApp_Ava.Views
 {
-    public partial class Text_NoteView : NoteViewBase
+    public partial class OverlayCanvasView : UserControl
     {
-        public Text_NoteView()
+        public OverlayCanvasView()
         {
             InitializeComponent();
         }

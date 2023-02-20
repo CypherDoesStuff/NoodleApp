@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Media.TextFormatting.Unicode;
+using Avalonia.Styling;
 using ProductiveApp_Ava.Models;
 using ProductiveApp_Ava.Services;
 using ProductiveApp_Ava.ViewModels;
@@ -15,9 +17,12 @@ namespace ProductiveApp_Ava.Views
     {
         public static bool isDragging;
         public static Point cursorOffset = new Point();
-        public static NoteViewBase currentDrag;
+
+        public static SelectableNoteBase currentSelectable;
 
         public static double snapSize = 10;
+
+        CanvasViewModel viewModel;
 
         public CanvasView()
         {
@@ -26,14 +31,32 @@ namespace ProductiveApp_Ava.Views
             AddHandler(DragDrop.DragEnterEvent, Canvas_Enter);
             AddHandler(DragDrop.DragOverEvent, Canvas_Over);
             AddHandler(DragDrop.DropEvent, Canvas_Drop);
+            AddHandler(PointerReleasedEvent, Canvas_Released);
+
+            viewModel = (CanvasViewModel)DataContext;
         }
 
-        public void Canvas_Enter(object? sender, DragEventArgs e)
+        private void Canvas_Released(object? sender, PointerReleasedEventArgs e)
+        {
+            if(e.InitialPressMouseButton == MouseButton.Left)
+            {
+                if (currentSelectable is not null)
+                    currentSelectable.Selected = false;
+            }
+
+            if(e.Source is AutoCanvas)
+            {
+                FocusManager.Instance.Focus(null);
+            }
+            Debug.WriteLine(e.Source);
+        }
+
+        protected void Canvas_Enter(object? sender, DragEventArgs e)
         {
             e.DragEffects = DragDropEffects.Move;
         }
 
-        public void Canvas_Over(object? sender, DragEventArgs e)
+        protected void Canvas_Over(object? sender, DragEventArgs e)
         {
             var data = e.Data.Get("PersistentObject");
 
@@ -52,18 +75,42 @@ namespace ProductiveApp_Ava.Views
             }
         }
 
-        public void Canvas_Drop(object? sender, DragEventArgs e)
+        protected void Canvas_Drop(object? sender, DragEventArgs e)
         {
             isDragging = false;
 
-            Note note = DragEventConverter.DragEventToNote(e);
+            bool isPersistent;
+            Note note = DragEventConverter.DragEventToNote(e, out isPersistent);
             if (note != null)
             {
-                Point dropPoint = e.GetPosition(this);
+                if (!isPersistent)
+                {
+                    Point dropPoint = e.GetPosition(this);
 
-                note.x = dropPoint.X;
-                note.y = dropPoint.Y;
-                MainWindowViewModel.AddNoteToDatabase(note);
+                    note.x = dropPoint.X;
+                    note.y = dropPoint.Y;
+                    MainWindowViewModel.AddNoteToDatabase(note);
+                }
+                else
+                {
+                    Point movePoint = new Point(
+                        e.GetPosition(itemControl).X - cursorOffset.X,
+                        e.GetPosition(itemControl).Y - cursorOffset.Y
+                    );
+
+                    if (e.KeyModifiers != KeyModifiers.Control)
+                        movePoint = SnapPointToGrid(movePoint);
+
+                    object data = e.Data.Get("PersistentObject");
+                    if (data is NoteViewModel model)
+                    {
+                        MainWindowViewModel.AddViewToCollection(model);
+                        model.x = movePoint.X;
+                        model.y = movePoint.Y;
+                    }
+
+                    MainWindowViewModel.ClearDragModel();
+                }
             }
         }
 

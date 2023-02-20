@@ -20,46 +20,39 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="20"/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
-
-		<WrapPanel
-			Grid.Row="0"
+		<views:CanvasView
 			Grid.ColumnSpan="2"
-			Background="Gray">
-			
-		</WrapPanel>
-		
+			Grid.Row="1" />
+
 		<DockPanel
 			Grid.Column="0"
 			Grid.Row="1"
-			Width="60"
-			Background="Gray">
+			LastChildFill="False">
 
-			<StackPanel>
-				<Button
-					Margin="2,5,2,2"
-					Width="50" Height="25"
-					HorizontalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					FontSize="10"
-				Command="{Binding EditNote}">Note</Button>
-				<Button
-					Margin="2,5,2,2"
-					Width="50" Height="25"
-					HorizontalAlignment="Center"
-					HorizontalContentAlignment="Center"
-					FontSize="10">Image</Button>
-			</StackPanel>
+			<ItemsControl
+				Grid.Column="0"
+				Background="#8ab0db"
+				Items="{Binding noteTools}"
+				>
+			</ItemsControl>
+
+			<views:TrashView
+				DockPanel.Dock="Bottom"
+				HorizontalAlignment="Right"
+				Width="60"
+				Height="60"
+				Margin="0,0,0,0"
+				DragDrop.AllowDrop="True"/>
 		</DockPanel>
-		
-		<views:CanvasView Grid.Column="1" Grid.Row="1" />
+
+		<views:OverlayCanvasView
+			Grid.ColumnSpan="2"
+			Grid.Row="1"/>
 
 		<TextBlock Text="{Binding Greeting}" 
 				   Grid.Column="1"
 				   Grid.Row="1"
 				   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	
 	</Grid>
 </Window>

@@ -30,13 +30,21 @@ namespace ProductiveApp_Ava.Services
             }
             catch(AggregateException aggEx)
             {
-                using (WebClient client = new WebClient())
+                try
                 {
-                    byte[] data = await client.DownloadDataTaskAsync(url);
+                    using (WebClient client = new WebClient())
+                    {
+                        byte[] data = await client.DownloadDataTaskAsync(url);
 
-                    Stream stream = new MemoryStream(data);
-                    return new Bitmap(stream);
+                        Stream stream = new MemoryStream(data);
+                        return new Bitmap(stream);
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+
             }
             catch(Exception ex)
             {
@@ -65,12 +73,24 @@ namespace ProductiveApp_Ava.Services
 
         public static async Task<MemoryStream> SetGifFromUrl(string url)
         {
-            Stream gifStream = await client.GetStreamAsync(url);
-
             MemoryStream stream = new MemoryStream();
-            gifStream.CopyTo(stream);
-            stream.Position = 0;
-            gifStream.Close();
+
+            try
+            {
+                Stream gifStream = await client.GetStreamAsync(url);
+
+                gifStream.CopyTo(stream);
+                stream.Position = 0;
+                gifStream.Close();
+            }
+            catch (Exception ex)
+            {
+                using (WebClient client = new WebClient())
+                {
+                    byte[] data = await client.DownloadDataTaskAsync(url);
+                    stream = new MemoryStream(data);
+                }
+            }
 
             return stream;
         }

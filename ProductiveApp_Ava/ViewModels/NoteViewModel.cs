@@ -20,9 +20,16 @@ namespace ProductiveApp_Ava.ViewModels
             set { _note.y = value; this.RaisePropertyChanged(nameof(y)); }
         }
 
+        public NoteViewContainer container;
+
         public NoteViewModel(Note note)
         {
             _note = note;
+        }
+
+        public void Remove()
+        {
+            container?.OnNoteViewRemoved(this);
         }
     }
 }

@@ -16,6 +16,9 @@ namespace ProductiveApp_Ava.Models
 
         [XmlElement(typeof(Text_Note))]
         [XmlElement(typeof(Image_Note))]
+        [XmlElement(typeof(Group_Note))]
+        [XmlElement(typeof(Board_Note))]
+        [XmlElement(typeof(Doc_Note))]
         public List<Note> notes;
 
         public Board()
@@ -53,7 +56,31 @@ namespace ProductiveApp_Ava.Models
     {
         [XmlText]
         public string url = string.Empty;
-        public ImageType type = ImageType.img;
+    }
+
+    public class Group_Note : Note 
+    {
+        [XmlText]
+        public string name = "Group";
+
+        [XmlElement(typeof(Text_Note))]
+        [XmlElement(typeof(Image_Note))]
+        [XmlElement(typeof(Board_Note))]
+        [XmlElement(typeof(Doc_Note))]
+        public List<Note> subNotes = new List<Note>();
+    }
+
+    public class Board_Note : Note 
+    {
+        [XmlText]
+        public string name = string.Empty;
+        public string location = string.Empty;
+    }
+
+    public class Doc_Note : Note
+    {
+        [XmlText]
+        public string location = string.Empty;
     }
 
     public enum ImageType

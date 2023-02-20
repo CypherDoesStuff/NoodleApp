@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" Width="300" MinHeight="100"
+             x:Class="ProductiveApp_Ava.Views.Board_NoteView">
+	<Border
+		Background="#8ab0db"
+		BorderBrush="Transparent"
+		BorderThickness="0"
+		CornerRadius="6">
+		<WrapPanel
+			VerticalAlignment="Center">
+			<Border
+				DockPanel.Dock="Left"
+				Background="White"
+				BorderBrush="Transparent"
+				CornerRadius="12"
+				Width="80"
+				Height="80"
+				Margin="10,0,0,0">
+				<Image Source="/Assets/board.png"/>	
+			</Border>
+			<TextBox
+				Width="190"
+				Background="Transparent"
+				BorderBrush="Transparent"
+				IsHitTestVisible="False"
+				Margin="10,0,0,0"
+				TextAlignment="Center"
+				VerticalContentAlignment="Center"
+				FontSize="35"
+				Focusable="False"
+				Text="{Binding name}"/>
+		</WrapPanel>
+	</Border>
+</UserControl>

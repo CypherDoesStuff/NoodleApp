@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="200" Width="60" Height="60"
+             x:Class="ProductiveApp_Ava.Views.NoteToolView">
+	<Border
+		CornerRadius="12"
+		BorderThickness="0"
+		Background="WhiteSmoke"
+		BorderBrush="WhiteSmoke"
+		Width="50"
+		Height="50">
+		<Image
+			Width="40"
+			Height="40"
+			Source="{Binding icon}"/>
+	</Border>
+</UserControl>

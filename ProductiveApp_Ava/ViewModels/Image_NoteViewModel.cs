@@ -1,9 +1,13 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using ProductiveApp_Ava.Models;
 using ProductiveApp_Ava.Services;
 using ReactiveUI;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace ProductiveApp_Ava.ViewModels
 {
@@ -12,34 +16,41 @@ namespace ProductiveApp_Ava.ViewModels
         MemoryStream _stream;
         Bitmap _source;
 
-        Bitmap source { 
+        public Bitmap source
+        {
             get { return _source; }
-            set { _source = value; this.RaisePropertyChanged(nameof(source)); }
+            private set { _source = value; }
         }
 
-        MemoryStream stream {
+        public MemoryStream stream
+        {
             get { return _stream; }
-            set { _stream = value; this.RaisePropertyChanged(nameof(stream)); }
+            private set { _stream = value; }
         }
 
         public Image_NoteViewModel(Note note) : base(note)
         {
             Image_Note imageNote = (Image_Note)note;
-            GetImage(imageNote.url);
+
+            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+            source = new Bitmap(assets.Open(new System.Uri("avares://ProductiveApp_Ava/Assets/LoadingImage.png")));
+            Task.Run(async () => await GetImage(imageNote.url));
         }
 
-        public async void GetImage(string url)
+        public async Task GetImage(string url)
         {
-            if (!ImageUtils.IsUrlGif(url))
-            {
-                Bitmap image = await ImageUtils.GetImage(url);
+            Bitmap image = await ImageUtils.GetImage(url);
 
-                if (image is not null)
-                    source = image;
-            }
-            else
+            if (image is not null)
+                source = image;
+
+            this.RaisePropertyChanged(nameof(source));
+
+            if (ImageUtils.IsUrlGif(url))
             {
                 stream = await ImageUtils.SetGifFromUrl(url);
+                source = null;
+                this.RaisePropertyChanged(nameof(stream));
             }
         }
     }
