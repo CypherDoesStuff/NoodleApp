@@ -29,6 +29,8 @@ namespace ProductiveApp_Ava.Views
             var data = e.Data.Get("PersistentObject");
             if (data is NoteViewModel model)
             {
+                model.OnDelete();
+
                 MainWindowViewModel.RemoveNoteFromCollection(model._note);
                 MainWindowViewModel.ClearDragModel();
 

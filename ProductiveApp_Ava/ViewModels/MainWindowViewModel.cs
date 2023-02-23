@@ -18,16 +18,23 @@ namespace ProductiveApp_Ava.ViewModels
     {
         public string Greeting => "Indev Build";
 
+        public static ObservableCollection<PathLinkViewModel> paths { get; private set; }
+
         public static ObservableCollection<NoteViewModel> notes { get; private set; }
         static Dictionary<Note, NoteViewModel> noteDict;
 
         public static ObservableCollection<NoteViewModel> dragCollection { get; private set; }
         public static ObservableCollection<NoteToolViewModel> noteTools { get; private set; }
 
+        static MainWindowViewModel instance;
         static Database db;
 
         public MainWindowViewModel()
         {
+            instance = this;
+
+            paths = new ObservableCollection<PathLinkViewModel>();
+
             notes = new ObservableCollection<NoteViewModel>();
             noteDict = new Dictionary<Note, NoteViewModel>();
 
@@ -40,9 +47,11 @@ namespace ProductiveApp_Ava.ViewModels
                 AddNoteToCollection(note);
 
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/sticky_note.png"))), new Text_Note()));
-            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/list.png"))), new Group_Note()));
-            //noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/board.png"))), new Board_Note()));
+            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/sticky_note.png"))), typeof(Text_Note)));
+            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/list.png"))), typeof(Group_Note)));
+            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/board.png"))), typeof(Board_Note)));
+
+            UpdateBoardPath();
         }
 
         public void OnWindowClose()
@@ -91,6 +100,38 @@ namespace ProductiveApp_Ava.ViewModels
             return AddNoteToCollection(note);
         }
 
+        public static ulong AddBoardToDatabase(string name)
+        {
+            return db.AddBoard(name);
+        }
+
+        public static void LoadBoardFromDatabase(ulong index)
+        {
+            if (db.GetSelectedBoard() == index)
+                return;
+
+            db.SaveBoard(db.GetSelectedBoard());
+            db.SelectBoard(index);
+
+            notes.Clear();
+            noteDict.Clear();
+
+            foreach (Note note in db.GetNotes())
+                AddNoteToCollection(note);
+
+            instance.UpdateBoardPath();
+        }
+
+        public static void RenameBoardInDatabase(ulong index, string name)
+        {
+            db.RenameBoard(index, name);
+        }
+
+        public static bool DeleteBoardFromDatabase(ulong index)
+        {
+            return db.DeleteBoard(index);
+        }
+
         public static void SetDragModel(NoteViewModel model)
         {
             notes.Remove(model);
@@ -101,6 +142,21 @@ namespace ProductiveApp_Ava.ViewModels
         public static void ClearDragModel()
         {
             dragCollection.Clear();
+        }
+
+        private void UpdateBoardPath()
+        {
+            paths.Clear();
+
+            ulong[] path = db.GetSelectedPath();
+            string pathString = string.Empty;
+            foreach (ulong pathId in path)
+            {
+                paths.Add(new PathLinkViewModel(pathId, db.GetBoardName(pathId)));
+            }
+
+            ulong currentId = db.GetSelectedBoard();
+            paths.Add(new PathLinkViewModel(currentId, db.GetBoardName(currentId)));
         }
     }
 }

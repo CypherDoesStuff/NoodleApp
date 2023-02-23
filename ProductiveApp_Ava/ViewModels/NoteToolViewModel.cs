@@ -14,17 +14,17 @@ namespace ProductiveApp_Ava.ViewModels
     public class NoteToolViewModel : ViewModelBase
     {
         public Bitmap icon { get; private set; }
-        public Note noteType;
+        public Type noteType;
 
-        public NoteToolViewModel(Bitmap toolIcon, Note toolNoteType)
+        public NoteToolViewModel(Bitmap toolIcon, Type toolNoteType)
         {
             icon = toolIcon;
             noteType = toolNoteType;    
         }
 
-        public Note GetNote()
+        public Note? GetNote()
         {
-            return noteType;
+            return (Note?)Activator.CreateInstance(noteType);
         }
     }
 }

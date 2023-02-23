@@ -13,6 +13,8 @@ namespace ProductiveApp_Ava.Models
     {
         [XmlText]
         public string name;
+        public ulong index;
+        public ulong parent;
 
         [XmlElement(typeof(Text_Note))]
         [XmlElement(typeof(Image_Note))]
@@ -24,12 +26,14 @@ namespace ProductiveApp_Ava.Models
         public Board()
         {
             name = "New Board";
+            index = 0;
             notes = new List<Note>();
         }
 
-        public Board(string name)
+        public Board(ulong index, string name)
         {
             this.name = name;
+            this.index = index;
             notes = new List<Note>();
         }
     }
@@ -73,6 +77,7 @@ namespace ProductiveApp_Ava.Models
     public class Board_Note : Note 
     {
         [XmlText]
+        public ulong index = 0;
         public string name = string.Empty;
         public string location = string.Empty;
     }

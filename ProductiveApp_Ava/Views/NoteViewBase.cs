@@ -60,6 +60,8 @@ namespace ProductiveApp_Ava.Views
                 {
                     CanvasView.isDragging = false;
                 }
+                else
+                    viewModel.OnDrop();
             }
         }
     }

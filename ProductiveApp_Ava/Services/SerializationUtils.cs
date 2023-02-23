@@ -16,7 +16,7 @@ namespace ProductiveApp_Ava.Services
 
                 var serializer = new XmlSerializer(typeof(Board));
                 serializer.Serialize(fileStream, board);
-                Debug.WriteLine("Creating file at " + fileName);
+                Debug.WriteLine("Saving file at " + fileName);
             }
             catch (SystemException ex)
             {

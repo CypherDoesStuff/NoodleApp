@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" Width="300" MinHeight="100"
+             mc:Ignorable="d" Width="300" MinHeight="100" Background="Transparent"
              x:Class="ProductiveApp_Ava.Views.Board_NoteView">
 	<Border
 		Background="#8ab0db"
 		BorderBrush="Transparent"
 		BorderThickness="0"
-		CornerRadius="6">
+		CornerRadius="12">
 		<WrapPanel
 			VerticalAlignment="Center">
 			<Border
@@ -25,12 +25,12 @@
 				Width="190"
 				Background="Transparent"
 				BorderBrush="Transparent"
-				IsHitTestVisible="False"
 				Margin="10,0,0,0"
 				TextAlignment="Center"
 				VerticalContentAlignment="Center"
 				FontSize="35"
-				Focusable="False"
+				x:Name="boardLabel"
+				Foreground="White"
 				Text="{Binding name}"/>
 		</WrapPanel>
 	</Border>

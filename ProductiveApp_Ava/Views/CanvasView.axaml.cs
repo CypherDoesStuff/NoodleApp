@@ -48,7 +48,6 @@ namespace ProductiveApp_Ava.Views
             {
                 FocusManager.Instance.Focus(null);
             }
-            Debug.WriteLine(e.Source);
         }
 
         protected void Canvas_Enter(object? sender, DragEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Input;
 using ProductiveApp_Ava.Models;
 using ReactiveUI;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -21,15 +22,29 @@ namespace ProductiveApp_Ava.ViewModels
         }
 
         public NoteViewContainer container;
+        public event Action onDropped;
+        public event Action onDeleted;
 
         public NoteViewModel(Note note)
         {
             _note = note;
         }
 
-        public void Remove()
+        public virtual void Remove()
         {
             container?.OnNoteViewRemoved(this);
+        }
+
+        public virtual void OnDrop()
+        {
+            onDropped?.Invoke();
+            Debug.WriteLine("Dropped Model!");
+        }
+
+        public virtual void OnDelete()
+        {
+            onDeleted?.Invoke();
+            Debug.WriteLine("Deleted Model!");
         }
     }
 }
