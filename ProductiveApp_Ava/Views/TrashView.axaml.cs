@@ -27,7 +27,7 @@ namespace ProductiveApp_Ava.Views
             CanvasView.isDragging = false;
 
             var data = e.Data.Get("PersistentObject");
-            if (data is NoteViewModel model)
+            if (data is NoteViewModelBase model)
             {
                 model.OnDelete();
 

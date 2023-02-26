@@ -42,13 +42,13 @@ namespace ProductiveApp_Ava.Views
                 NoteToolViewModel toolModel = (NoteToolViewModel)DataContext;
                 if (toolModel is not null)
                 {
-                    NoteViewModel model = MainWindowViewModel.AddNoteToDatabase(toolModel.GetNote());
+                    NoteViewModelBase model = MainWindowViewModel.AddNoteToDatabase(toolModel.GetNote());
                     NoteDragDrop(e, model);
                 }
             }
         }
 
-        internal async void NoteDragDrop(PointerEventArgs e, NoteViewModel viewModel)
+        internal async void NoteDragDrop(PointerEventArgs e, NoteViewModelBase viewModel)
         {
             viewModel.Remove();
 

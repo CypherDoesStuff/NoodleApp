@@ -14,11 +14,13 @@
 		x:Name="textBox"
 		AcceptsReturn="True"
 		ScrollViewer.VerticalScrollBarVisibility="Disabled"
-		ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+		ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+		CornerRadius="6">
 			<TextBox.Styles>
 				<Style Selector="TextBox:pointerover /template/ Border">
 					<Setter Property="Background" Value="White"/>
 					<Setter Property="BorderBrush" Value="Transparent"/>
+					<Setter Property="CornerRadius" Value="6"/>
 				</Style>
 			</TextBox.Styles>
 		</TextBox>

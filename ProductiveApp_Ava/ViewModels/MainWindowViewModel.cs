@@ -16,14 +16,14 @@ namespace ProductiveApp_Ava.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Indev Build";
+        public string Greeting => "";
 
         public static ObservableCollection<PathLinkViewModel> paths { get; private set; }
 
-        public static ObservableCollection<NoteViewModel> notes { get; private set; }
-        static Dictionary<Note, NoteViewModel> noteDict;
+        public static ObservableCollection<NoteViewModelBase> notes { get; private set; }
+        static Dictionary<Note, NoteViewModelBase> noteDict;
 
-        public static ObservableCollection<NoteViewModel> dragCollection { get; private set; }
+        public static ObservableCollection<NoteViewModelBase> dragCollection { get; private set; }
         public static ObservableCollection<NoteToolViewModel> noteTools { get; private set; }
 
         static MainWindowViewModel instance;
@@ -35,10 +35,10 @@ namespace ProductiveApp_Ava.ViewModels
 
             paths = new ObservableCollection<PathLinkViewModel>();
 
-            notes = new ObservableCollection<NoteViewModel>();
-            noteDict = new Dictionary<Note, NoteViewModel>();
+            notes = new ObservableCollection<NoteViewModelBase>();
+            noteDict = new Dictionary<Note, NoteViewModelBase>();
 
-            dragCollection = new ObservableCollection<NoteViewModel>();
+            dragCollection = new ObservableCollection<NoteViewModelBase>();
             noteTools = new ObservableCollection<NoteToolViewModel>();
 
             db = new Database();
@@ -49,6 +49,7 @@ namespace ProductiveApp_Ava.ViewModels
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/sticky_note.png"))), typeof(Text_Note)));
             noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/list.png"))), typeof(Group_Note)));
+            noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/todo.png"))), typeof(Todo_Note)));
             noteTools.Add(new NoteToolViewModel(new Bitmap(assets.Open(new Uri("avares://ProductiveApp_Ava/Assets/board.png"))), typeof(Board_Note)));
 
             UpdateBoardPath();
@@ -60,9 +61,9 @@ namespace ProductiveApp_Ava.ViewModels
             db.SaveAll();
         }
 
-        public static NoteViewModel AddNoteToCollection(Note note)
+        public static NoteViewModelBase AddNoteToCollection(Note note)
         {
-            NoteViewModel noteView = NoteConverter.ConvertNoteToView(note);
+            NoteViewModelBase noteView = NoteConverter.ConvertNoteToView(note);
 
             if (noteView is not null)
             {
@@ -89,12 +90,12 @@ namespace ProductiveApp_Ava.ViewModels
             }
         }
 
-        public static void AddViewToCollection(NoteViewModel model)
+        public static void AddViewToCollection(NoteViewModelBase model)
         {
             notes.Add(model);
         }
 
-        public static NoteViewModel AddNoteToDatabase(Note note)
+        public static NoteViewModelBase AddNoteToDatabase(Note note)
         {
             db.AddNote(note);
             return AddNoteToCollection(note);
@@ -132,7 +133,7 @@ namespace ProductiveApp_Ava.ViewModels
             return db.DeleteBoard(index);
         }
 
-        public static void SetDragModel(NoteViewModel model)
+        public static void SetDragModel(NoteViewModelBase model)
         {
             notes.Remove(model);
             dragCollection.Clear();

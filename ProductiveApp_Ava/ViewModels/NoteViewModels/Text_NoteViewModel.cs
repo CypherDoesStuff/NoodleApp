@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProductiveApp_Ava.ViewModels
 {
-    public class Text_NoteViewModel : NoteViewModel
+    public class Text_NoteViewModel : NoteViewModelBase
     {
         public string text
         {

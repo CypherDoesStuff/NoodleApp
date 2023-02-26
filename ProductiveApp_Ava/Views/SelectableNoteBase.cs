@@ -27,23 +27,28 @@ namespace ProductiveApp_Ava.Views
 
         protected override void OnPointerPressed(PointerPressedEventArgs e)
         {
+            Debug.WriteLine("On pointer pressed!");
             initialPressPoint = e.GetPosition(this);
+            Debug.WriteLine("Pressed" + initialPressPoint);
 
             base.OnPointerPressed(e);
         }
 
         protected override void OnPointerReleased(PointerReleasedEventArgs e)
         {
-            if (e.InitialPressMouseButton == MouseButton.Left)
+            Debug.WriteLine("On pointer released!");
+
+            if (e.InitialPressMouseButton == MouseButton.Left && !Selected)
             {
                 if(CanvasView.currentSelectable is not null)
                     CanvasView.currentSelectable.Selected = false;
 
                 Selected = true;
                 CanvasView.currentSelectable = this;
-
-                e.Handled = true;
             }
+
+            if(Selected)
+                e.Handled = true;
 
             base.OnPointerReleased(e);
         }
@@ -55,13 +60,15 @@ namespace ProductiveApp_Ava.Views
 
             if (!Selected && e.GetCurrentPoint(this).Properties.IsLeftButtonPressed && distance > dragDistance)
             {
-                var viewModel = (NoteViewModel)DataContext;
+                Debug.WriteLine(distance);
+
+                var viewModel = (NoteViewModelBase)DataContext;
 
                 if (viewModel is not null)
                     NoteDragDrop(e, viewModel);
-
-                e.Handled|= true;
             }
+
+            e.Handled = true;
         }
     }
 }

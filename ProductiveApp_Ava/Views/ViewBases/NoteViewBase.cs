@@ -15,7 +15,7 @@ namespace ProductiveApp_Ava.Views
     {
         protected override void OnInitialized()
         {
-            NoteViewModel viewModel = (NoteViewModel)DataContext;
+            NoteViewModelBase viewModel = (NoteViewModelBase)DataContext;
             if(viewModel is not null)
             {
 
@@ -28,7 +28,7 @@ namespace ProductiveApp_Ava.Views
         {
             if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
             {
-                var viewModel = (NoteViewModel)DataContext;
+                var viewModel = (NoteViewModelBase)DataContext;
 
                 if (viewModel is not null)
                 {
@@ -41,7 +41,7 @@ namespace ProductiveApp_Ava.Views
             base.OnPointerMoved(e);
         }
 
-        internal async void NoteDragDrop(PointerEventArgs e, NoteViewModel viewModel)
+        internal async void NoteDragDrop(PointerEventArgs e, NoteViewModelBase viewModel)
         {
             if (!CanvasView.isDragging)
             {

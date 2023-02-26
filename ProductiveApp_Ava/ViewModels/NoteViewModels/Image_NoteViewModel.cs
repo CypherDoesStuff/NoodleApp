@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProductiveApp_Ava.ViewModels
 {
-    public class Image_NoteViewModel : NoteViewModel
+    public class Image_NoteViewModel : NoteViewModelBase
     {
         MemoryStream _stream;
         Bitmap _source;

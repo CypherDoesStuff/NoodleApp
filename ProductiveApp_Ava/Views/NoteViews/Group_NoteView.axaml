@@ -27,7 +27,8 @@
 			</TextBox>
 			<ItemsControl Items="{Binding notes}"
 						  Padding="10,10,10,10"
-						  HorizontalAlignment="Stretch">
+						  HorizontalAlignment="Stretch"
+						  x:Name="groupPanel">
 				<ItemsControl.Styles>
 					<Style Selector=":is(Control)">
 						<Setter Property="Margin" Value="0,0.2,0,0.2"/>

@@ -6,16 +6,19 @@ using ProductiveApp_Ava.ViewModels;
 using ProductiveApp_Ava.Models;
 using ProductiveApp_Ava.Services;
 using System.Diagnostics;
+using Avalonia.VisualTree;
+using Avalonia;
+using System.Linq;
 
 namespace ProductiveApp_Ava.Views
 {
-    public partial class Group_NoteView : NoteViewBase
+    public partial class Group_NoteView : GroupViewBase
     {
         public Group_NoteView()
         {
             InitializeComponent();
 
-            AddHandler(DragDrop.DropEvent, GroupDrop);
+            groupItemsControl = groupPanel;
 
             groupLabel.Focusable = false;
             groupLabel.Cursor = new Cursor(StandardCursorType.Arrow);
@@ -37,25 +40,9 @@ namespace ProductiveApp_Ava.Views
             groupLabel.Cursor =  new Cursor(StandardCursorType.Arrow);
         }
 
-        private void GroupDrop(object? sender, DragEventArgs e)
+        public override bool CanDrop(Note note)
         {
-            Group_NoteViewModel groupModel = (Group_NoteViewModel)DataContext;
-
-            bool isPersistent;
-            Note note = DragEventConverter.DragEventToNote(e, out isPersistent);
-
-            if (groupModel is not null && groupModel._note != note)
-            {
-                if (!isPersistent)
-                    groupModel.AddNote(note);
-                else //Add model directly for speed?
-                    groupModel.AddNote(note);
-            }
-
-            Debug.WriteLine("Attempt drag drop on group!");
-
-            CanvasView.isDragging = false;
-            e.Handled = true;
+            return note is not Group_Note;
         }
     }
 }

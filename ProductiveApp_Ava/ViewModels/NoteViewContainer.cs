@@ -8,6 +8,6 @@ namespace ProductiveApp_Ava.ViewModels
 {
     public interface NoteViewContainer
     {
-        public abstract void OnNoteViewRemoved(NoteViewModel noteModel);
+        public abstract void OnNoteViewRemoved(NoteViewModelBase noteModel);
     }
 }

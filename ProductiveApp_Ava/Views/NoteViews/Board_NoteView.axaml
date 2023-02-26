@@ -2,13 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" Width="300" MinHeight="100" Background="Transparent"
+             mc:Ignorable="d" MinWidth="100" MinHeight="100" Background="Transparent"
              x:Class="ProductiveApp_Ava.Views.Board_NoteView">
 	<Border
 		Background="#8ab0db"
 		BorderBrush="Transparent"
 		BorderThickness="0"
-		CornerRadius="12">
+		CornerRadius="6">
 		<WrapPanel
 			VerticalAlignment="Center">
 			<Border
@@ -21,17 +21,21 @@
 				Margin="10,0,0,0">
 				<Image Source="/Assets/board.png"/>	
 			</Border>
-			<TextBox
-				Width="190"
-				Background="Transparent"
-				BorderBrush="Transparent"
-				Margin="10,0,0,0"
-				TextAlignment="Center"
-				VerticalContentAlignment="Center"
-				FontSize="35"
-				x:Name="boardLabel"
-				Foreground="White"
-				Text="{Binding name}"/>
+			<Viewbox
+				MinWidth="80"
+				MaxWidth="180">
+				<TextBox
+					Background="Transparent"
+					BorderBrush="Transparent"
+					Margin="10,0,10,0"
+					TextAlignment="Center"
+					VerticalContentAlignment="Stretch"
+					ScrollViewer.VerticalScrollBarVisibility="Disabled"
+					ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+					x:Name="boardLabel"
+					Foreground="Black"
+					Text="{Binding name}"/>
+			</Viewbox>
 		</WrapPanel>
 	</Border>
 </UserControl>

@@ -67,7 +67,7 @@ namespace ProductiveApp_Ava.Views
             if(e.KeyModifiers != KeyModifiers.Control)
                 movePoint = SnapPointToGrid(movePoint);
 
-            if(data is NoteViewModel model)
+            if(data is NoteViewModelBase model)
             {
                 model.x = movePoint.X;
                 model.y = movePoint.Y;
@@ -101,7 +101,7 @@ namespace ProductiveApp_Ava.Views
                         movePoint = SnapPointToGrid(movePoint);
 
                     object data = e.Data.Get("PersistentObject");
-                    if (data is NoteViewModel model)
+                    if (data is NoteViewModelBase model)
                     {
                         MainWindowViewModel.AddViewToCollection(model);
                         model.x = movePoint.X;

@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ProductiveApp_Ava.ViewModels
 {
-    public class Board_NoteViewModel : NoteViewModel
+    public class Board_NoteViewModel : NoteViewModelBase
     {
         public string name 
         {

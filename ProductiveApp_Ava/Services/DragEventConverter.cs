@@ -25,7 +25,7 @@ namespace ProductiveApp_Ava.Services
                 Debug.WriteLine("Serializable");
 
                 object data = e.Data.Get("PersistentObject");
-                if (data is NoteViewModel model)
+                if (data is NoteViewModelBase model)
                 {
                     isPersistent = true;
                     return model._note;

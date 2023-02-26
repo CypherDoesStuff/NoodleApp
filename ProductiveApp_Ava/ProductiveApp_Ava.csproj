@@ -6,6 +6,7 @@
     <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
     <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationIcon>Assets\noodles.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -18,6 +19,10 @@
     <None Remove="Assets\list.png" />
     <None Remove="Assets\LoadingImage.png" />
     <None Remove="Assets\sticky_note.png" />
+    <None Remove="Assets\todo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\noodles.ico" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.

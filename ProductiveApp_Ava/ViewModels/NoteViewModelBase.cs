@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace ProductiveApp_Ava.ViewModels
 {
-    public class NoteViewModel : ViewModelBase
+    public class NoteViewModelBase : ViewModelBase
     {
         internal Note _note;
 
@@ -25,7 +25,7 @@ namespace ProductiveApp_Ava.ViewModels
         public event Action onDropped;
         public event Action onDeleted;
 
-        public NoteViewModel(Note note)
+        public NoteViewModelBase(Note note)
         {
             _note = note;
         }

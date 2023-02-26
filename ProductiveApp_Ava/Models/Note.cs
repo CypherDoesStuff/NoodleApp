@@ -21,6 +21,8 @@ namespace ProductiveApp_Ava.Models
         [XmlElement(typeof(Group_Note))]
         [XmlElement(typeof(Board_Note))]
         [XmlElement(typeof(Doc_Note))]
+        [XmlElement(typeof(Todo_Note))]
+        [XmlElement(typeof(TodoItem_Note))]
         public List<Note> notes;
 
         public Board()
@@ -71,6 +73,8 @@ namespace ProductiveApp_Ava.Models
         [XmlElement(typeof(Image_Note))]
         [XmlElement(typeof(Board_Note))]
         [XmlElement(typeof(Doc_Note))]
+        [XmlElement(typeof(Todo_Note))]
+        [XmlElement(typeof(TodoItem_Note))]
         public List<Note> subNotes = new List<Note>();
     }
 
@@ -80,6 +84,22 @@ namespace ProductiveApp_Ava.Models
         public ulong index = 0;
         public string name = string.Empty;
         public string location = string.Empty;
+    }
+
+    public class Todo_Note : Note 
+    {
+        [XmlText]
+        public string name = "Group";
+
+        [XmlElement(typeof(TodoItem_Note))]
+        public List<Note> todoItems = new List<Note>();
+    }
+
+    public class TodoItem_Note : Note
+    {
+        [XmlText]
+        public string name = "";
+        public bool isDone = false;
     }
 
     public class Doc_Note : Note

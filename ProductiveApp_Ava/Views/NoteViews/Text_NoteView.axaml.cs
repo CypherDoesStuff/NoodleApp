@@ -19,9 +19,13 @@ namespace ProductiveApp_Ava.Views
         private void Text_NoteView_selectedChanged(object? sender, bool e)
         {
             textBox.Focusable = e;
+            textBox.IsHitTestVisible = e;
 
             if (e)
+            {
                 textBox.Focus();
+                textBox.CaretIndex = textBox.Text.Length;
+            }
             else
                 FocusManager.Instance.Focus(null);
         }

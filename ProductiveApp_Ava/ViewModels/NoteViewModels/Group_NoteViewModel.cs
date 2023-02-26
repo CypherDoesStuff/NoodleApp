@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ProductiveApp_Ava.ViewModels
 {
-    public class Group_NoteViewModel : NoteViewModel, NoteViewContainer
+    public class Group_NoteViewModel : GroupViewModelBase, NoteViewContainer
     {
         public string name
         {
@@ -20,17 +20,14 @@ namespace ProductiveApp_Ava.ViewModels
             set { ((Group_Note)_note).name = value; this.RaisePropertyChanged(nameof(name)); }
         }
 
-        public ObservableCollection<NoteViewModel> notes { get; private set; }
         internal Group_Note group_Note;
 
         public Group_NoteViewModel(Note note) : base(note)
         {
-            notes = new ObservableCollection<NoteViewModel>();
-
             group_Note = (Group_Note)_note;
             foreach (Note subNote in group_Note.subNotes)
             {
-                NoteViewModel noteView = NoteConverter.ConvertNoteToView(subNote);
+                NoteViewModelBase noteView = NoteConverter.ConvertNoteToView(subNote);
 
                 if (noteView is not null && noteView is not Group_NoteViewModel)
                 {
@@ -40,7 +37,7 @@ namespace ProductiveApp_Ava.ViewModels
             }
         }
 
-        public void AddNote(Note note)
+        public override void AddNote(Note note)
         {
             Debug.WriteLine("Group adding note!");
             group_Note.subNotes.Add(note);
@@ -48,7 +45,7 @@ namespace ProductiveApp_Ava.ViewModels
             MainWindowViewModel.RemoveNoteFromCollection(note);
             MainWindowViewModel.ClearDragModel();
 
-            NoteViewModel noteView = NoteConverter.ConvertNoteToView(note);
+            NoteViewModelBase noteView = NoteConverter.ConvertNoteToView(note);
             noteView.container = this;
 
             if (noteView is not null && noteView is not Group_NoteViewModel)
@@ -58,7 +55,25 @@ namespace ProductiveApp_Ava.ViewModels
             }
         }
 
-        public void OnNoteViewRemoved(NoteViewModel noteModel)
+        public override void InsertNote(Note note, int index)
+        {
+            Debug.WriteLine("Group inserting note!");
+            group_Note.subNotes.Insert(index, note);
+
+            MainWindowViewModel.RemoveNoteFromCollection(note);
+            MainWindowViewModel.ClearDragModel();
+
+            NoteViewModelBase noteView = NoteConverter.ConvertNoteToView(note);
+            noteView.container = this;
+
+            if (noteView is not null && noteView is not Group_NoteViewModel)
+            {
+                Debug.WriteLine("Adding group success!");
+                notes.Insert(index, noteView);
+            }
+        }
+
+        public void OnNoteViewRemoved(NoteViewModelBase noteModel)
         {
             Debug.WriteLine("REMOVING FROM GROUP");
             notes.Remove(noteModel);
