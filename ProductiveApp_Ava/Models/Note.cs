@@ -23,6 +23,7 @@ namespace ProductiveApp_Ava.Models
         [XmlElement(typeof(Doc_Note))]
         [XmlElement(typeof(Todo_Note))]
         [XmlElement(typeof(TodoItem_Note))]
+        [XmlElement(typeof(Link_Note))]
         public List<Note> notes;
 
         public Board()
@@ -75,6 +76,7 @@ namespace ProductiveApp_Ava.Models
         [XmlElement(typeof(Doc_Note))]
         [XmlElement(typeof(Todo_Note))]
         [XmlElement(typeof(TodoItem_Note))]
+        [XmlElement(typeof(Link_Note))]
         public List<Note> subNotes = new List<Note>();
     }
 
@@ -106,6 +108,12 @@ namespace ProductiveApp_Ava.Models
     {
         [XmlText]
         public string location = string.Empty;
+    }
+
+    public class Link_Note : Note
+    {
+        [XmlText]
+        public string url = string.Empty;
     }
 
     public enum ImageType

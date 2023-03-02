@@ -3,6 +3,7 @@
         xmlns:vm="using:ProductiveApp_Ava.ViewModels"
 		xmlns:views="using:ProductiveApp_Ava.Views"
 		xmlns:local="using:ProductiveApp_Ava.Models"
+		xmlns:web="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -107,6 +108,8 @@
 				   Grid.Column="1"
 				   Grid.Row="1"
 				   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+		<!-- <web:WebView Address="https://www.youtube.com/embed/94WoHfgMUXo" Grid.Row="1" Grid.Column="1"/> -->
 	
 	</Grid>
 </Window>

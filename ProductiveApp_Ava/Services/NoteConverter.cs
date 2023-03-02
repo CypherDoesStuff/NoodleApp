@@ -26,6 +26,8 @@ namespace ProductiveApp_Ava.Services
                     return new TodoList_ViewModel(note);
                 case TodoItem_Note:
                     return new TodoTask_ViewModel(note);
+                case Link_Note:
+                    return new Link_NoteViewModel(note);
             }
 
             return null;

@@ -93,14 +93,19 @@ namespace ProductiveApp_Ava.Services
                 //Method this?
                 if (Uri.IsWellFormedUriString(dropText, UriKind.RelativeOrAbsolute))
                 {
+                    string linkUrl = dropText;
+
+                    if (Uri.IsWellFormedUriString(dropText, UriKind.Relative))
+                        linkUrl = "http://" + dropText;
+
                     Debug.WriteLine("Is real url");
-                    if (ImageUtils.IsUrlImage(dropText) || ImageUtils.IsUrlGif(dropText))
+                    if (ImageUtils.IsUrlImage(linkUrl) || ImageUtils.IsUrlGif(linkUrl))
                     {
-                        return new Image_Note() { url = dropText };
+                        return new Image_Note() { url = linkUrl };
                     }
                     else
                     {
-                        return new Text_Note() { text = dropText };
+                        return new Link_Note() { url = linkUrl };
                     }
                 }
                 else

@@ -3,14 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:gif="using:AvaloniaGif"
-             mc:Ignorable="d" Width="300" Height="200"
+             mc:Ignorable="d" Width="300" MinHeight="10"
              x:Class="ProductiveApp_Ava.Views.Image_NoteView">
-	<Panel>
-		<Image Source="{Binding source}"/>
-		<gif:GifImage
-			x:Name="Gif"
-			Stretch="Uniform"
-			StretchDirection="DownOnly"
-			SourceStream="{Binding stream}"/>
-	</Panel>
+	<Border
+		Background="Transparent"
+		ClipToBounds="True"
+		CornerRadius="6">
+		<Panel>
+			<Image Source="{Binding source}"/>
+			<gif:GifImage
+				x:Name="Gif"
+				Stretch="Uniform"
+				StretchDirection="DownOnly"
+				SourceStream="{Binding stream}"/>
+		</Panel>
+	</Border>
 </UserControl>
